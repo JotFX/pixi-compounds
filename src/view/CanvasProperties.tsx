@@ -9,6 +9,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {HexColorPicker} from "react-colorful";
+import {HEXToVBColor, VBColorToHEX} from "../util/colorFunctions";
 
 export const CanvasProperties = observer((props: {store: RootStore}) => {
     return <FormGroup>
@@ -33,6 +35,10 @@ export const CanvasProperties = observer((props: {store: RootStore}) => {
                     <MenuItem value={40}>40</MenuItem>
                     <MenuItem value={50}>50</MenuItem>
                 </Select>
+            </FormControl>
+            <FormControl>
+
+                <HexColorPicker style={{height: 150}}  color={VBColorToHEX(props.store.backgroundColor)} onChange={col => props.store.backgroundColor = HEXToVBColor(col)} />
             </FormControl>
         </FormGroup>
 });
