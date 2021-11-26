@@ -13,6 +13,8 @@ import {IElement} from "../store/elements/IElement";
 import {CanvasProperties} from "./CanvasProperties";
 import {BBoxEditor} from "./propertyEditors/BBoxEditor";
 import {Paper} from "@mui/material";
+import {TextElement} from "../store/elements/TextElement";
+import {ShapeElement} from "../store/elements/ShapeElement";
 
 export const PropertySheet = observer((props: {store: RootStore; onExport: () => void; }) => {
 
@@ -26,10 +28,18 @@ export const PropertySheet = observer((props: {store: RootStore; onExport: () =>
     };
     const createImage = () => {
         handleClose();
-        props.store.createElement(new ImageElement());
+        props.store.addElement(new ImageElement());
+    };
+    const createText = () => {
+        handleClose();
+        props.store.addElement(new TextElement());
+    };
+    const createShape = () => {
+        handleClose();
+        props.store.addElement(new ShapeElement());
     };
     const onExport = () => {
-        <button onClick={props.onExport}>Export</button>
+        props.onExport();
     };
 
 
@@ -37,10 +47,9 @@ export const PropertySheet = observer((props: {store: RootStore; onExport: () =>
 
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-
-                </Typography>
-                <Button color="inherit" onClick={onExport}>Export</Button>
+                <div style={{textAlign: "left", flexGrow: 1}} >
+                    <Button color="inherit" variant={"outlined"} onClick={onExport}>Export</Button>
+                </div>
                 <Button color="inherit" onClick={openElementMenu}>Create Element</Button>
 
                 <Menu
@@ -53,6 +62,8 @@ export const PropertySheet = observer((props: {store: RootStore; onExport: () =>
                     }}
                 >
                     <MenuItem onClick={createImage}>Image</MenuItem>
+                    <MenuItem onClick={createText}>Text</MenuItem>
+                    <MenuItem onClick={createShape}>Shape</MenuItem>
                 </Menu>
 
             </Toolbar>

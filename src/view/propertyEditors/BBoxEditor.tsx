@@ -7,9 +7,15 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import * as React from "react";
+import {HorizontalAlignEditor} from "./HorizontalAlignEditor";
+import {VerticalAlignEditor} from "./VerticalAlignEditor";
 
 
-export const BBoxEditor = observer((props: { element: IElement }) => {
+export const BBoxEditor = observer((props: {
+    element: IElement,
+    hideFitSelect?: boolean,
+}) => {
+
     return <React.Fragment><FormGroup>
 
         <TextField id="outlined-number" label="X" type="number" variant="standard"
@@ -30,9 +36,18 @@ export const BBoxEditor = observer((props: { element: IElement }) => {
                    value={props.element.bbox.height}/>
 
     </FormGroup>
-        <FormGroup>
+        <FormGroup style={{margin: 10, textAlign: "left"}}>
+            <HorizontalAlignEditor model={props.element}/>
+        </FormGroup>
+        <FormGroup style={{margin: 10, textAlign: "left"}}>
+            <VerticalAlignEditor model={props.element}/>
+        </FormGroup>
+        <FormGroup style={{margin: 10, textAlign: "left"}}>
+        </FormGroup>
+        {!props.hideFitSelect &&
+        <FormGroup style={{margin: 10, textAlign: "left"}}>
             <FormControl>
-                <InputLabel id="fitTypeLabel">Fitting type</InputLabel>
+                <InputLabel id="fitTypeLabel">Content Fit</InputLabel>
                 <Select
                     labelId="fitTypeLabel"
                     variant="outlined"
@@ -46,6 +61,6 @@ export const BBoxEditor = observer((props: { element: IElement }) => {
                     <MenuItem value={BBoxFit.containNoEnlarge}>Contain, no enlarge</MenuItem>
                 </Select>
             </FormControl>
-        </FormGroup>
+        </FormGroup>}
     </React.Fragment>
 });

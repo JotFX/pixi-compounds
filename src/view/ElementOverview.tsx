@@ -11,6 +11,8 @@ import {ElementType, IElement} from "../store/elements/IElement";
 import ImageIcon from '@mui/icons-material/Image';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import {ListItemButton} from "@mui/material";
+import AbcIcon from '@mui/icons-material/Abc';
+import CategoryIcon from '@mui/icons-material/Category';
 
 export const ElementOverview = observer((props: { store: RootStore }) => {
 
@@ -18,9 +20,12 @@ export const ElementOverview = observer((props: { store: RootStore }) => {
         switch (el.type) {
             case ElementType.Image:
                 return <ImageIcon/>
+            case ElementType.Text:
+                return <AbcIcon/>
+            case ElementType.Shape:
+                return <CategoryIcon/>
             default:
                 return <QuestionMarkIcon/>
-            // shape: import CategoryIcon from '@mui/icons-material/Category';
         }
     }
 

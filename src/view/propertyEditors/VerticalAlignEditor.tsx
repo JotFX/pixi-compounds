@@ -5,20 +5,20 @@ import * as React from "react";
 import {FormGroup} from "@mui/material";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import {AlignHorizontal} from "../../manipulators/Resizer";
+import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
 
-export const HorizontalAlignEditor = observer((props: {model: IElement}) => {
+export const VerticalAlignEditor = observer((props: {model: IElement}) => {
     return <FormGroup>
 
-        <ToggleButtonGroup
+        <ToggleButtonGroup title="Vertical Align"
         color="primary"
-        value={props.model.bbox.horizontalAlign}
+        value={props.model.bbox.verticalAlign}
         exclusive
-        onChange={(e, value) => props.model.bbox.horizontalAlign = value as AlignHorizontal}
+        onChange={(e, value) => props.model.bbox.verticalAlign = value as AlignVertical}
     >
-        <ToggleButton value={AlignHorizontal.left}>Left</ToggleButton>
-        <ToggleButton value={AlignHorizontal.center}>Center</ToggleButton>
-        <ToggleButton value={AlignHorizontal.right}>Right</ToggleButton>
+        <ToggleButton value={AlignVertical.top}>Top</ToggleButton>
+        <ToggleButton value={AlignVertical.center}>Center</ToggleButton>
+        <ToggleButton value={AlignVertical.bottom}>Bottom</ToggleButton>
     </ToggleButtonGroup>
 
 

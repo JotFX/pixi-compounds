@@ -3,12 +3,25 @@ import {IElement} from "../../store/elements/IElement";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import {FormGroup} from "@mui/material";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import {AlignHorizontal} from "../../manipulators/Resizer";
 
-export const TitleEditor = observer((props: {model: IElement}) => {
+export const HorizontalAlignEditor = observer((props: { model: IElement }) => {
     return <FormGroup>
-        <TextField label="Title" variant="standard"
-               InputLabelProps={{shrink: true}}
-               onChange={e => props.model.title = e.target.value}
-                                 value={props.model.title}/>
+
+        <ToggleButtonGroup
+            title="Horizontal Align"
+            color="primary"
+            value={props.model.bbox.horizontalAlign}
+            exclusive
+            onChange={(e, value) => props.model.bbox.horizontalAlign = value as AlignHorizontal}
+        >
+            <ToggleButton value={AlignHorizontal.left}>Left</ToggleButton>
+            <ToggleButton value={AlignHorizontal.center}>Center</ToggleButton>
+            <ToggleButton value={AlignHorizontal.right}>Right</ToggleButton>
+        </ToggleButtonGroup>
+
+
     </FormGroup>
 });

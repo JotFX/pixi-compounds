@@ -1,6 +1,8 @@
 import {IElementRenderer} from "../../rendering/elements/IElementRenderer";
 import {ReactElement} from "react";
 import {RootStore} from "../RootStore";
+import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
+import {observable} from "mobx";
 
 export enum BBoxFit {
     contain = "contain",
@@ -11,6 +13,8 @@ export enum BBoxFit {
 
 export enum ElementType {
     Image = "Image",
+    Text = "Text",
+    Shape = "Shape",
 }
 
 export interface BBox {
@@ -19,6 +23,20 @@ export interface BBox {
     width: number;
     height: number;
     fit: BBoxFit;
+    horizontalAlign: AlignHorizontal;
+    verticalAlign: AlignVertical;
+}
+
+export const createBBox = () => {
+    return observable({
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100,
+        fit: BBoxFit.contain,
+        horizontalAlign: AlignHorizontal.left,
+        verticalAlign: AlignVertical.center
+    });
 }
 
 export interface IElement {

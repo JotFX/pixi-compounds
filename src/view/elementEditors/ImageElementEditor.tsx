@@ -11,7 +11,7 @@ import {TitleEditor} from "../propertyEditors/TitleEditor";
 export const ImageElementEditor = observer((props: {model: ImageElement, store: RootStore}) => {
     const onImageSelect = (img: ImageFile | undefined) => {
         if (img) {
-            props.model.imageId = img.id;
+            props.model.imageId = img.name;
         } else {
             props.model.imageId = "";
         }

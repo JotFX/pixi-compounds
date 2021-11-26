@@ -11,7 +11,7 @@ export const ImageList = observer((props: { store: RootStore }) => {
   return (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>
       {props.store.imageStore.imageArray.map((f) => (
-        <ListItem key={f.id}>
+        <ListItem key={f.name}>
           <ListItemAvatar>
             <Avatar>
               <div style={{background: "url(" + f.content + ")", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "contain", width: 32, height: 32}}> </div>

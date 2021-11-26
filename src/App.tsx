@@ -8,11 +8,13 @@ import { ImageList } from "./view/ImageList";
 import {PropertySheet} from "./view/PropertySheet";
 import {ElementOverview} from "./view/ElementOverview";
 import Typography from "@mui/material/Typography";
+import {ErrorToaster} from "./view/ErrorToaster";
 
 export const App = observer(
   (props: { onExport: () => void; store: RootStore }) => {
     return (
       <React.Fragment>
+        <ErrorToaster store={props.store} />
         <div className="App">
           <div className="topLeft">
             <RenderContainer />
@@ -26,10 +28,10 @@ export const App = observer(
               <ImageList store={props.store} />
             </Paper>
           </div>
-          <div className="topRight">
+          <div className="topRight" style={{ overflow: "auto" }}>
             <PropertySheet onExport={props.onExport} store={props.store} />
           </div>
-          <div className="bottomRight">
+          <div className="bottomRight" style={{ overflow: "auto" }}>
             <Paper style={{ height: "100%", overflow: "hidden" }}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "left"  }}>
                 Element Overview

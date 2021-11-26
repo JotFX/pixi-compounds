@@ -1,6 +1,9 @@
+import {ZipInOut} from "./ZipInOut";
+
 export class FileDropper {
   constructor(
-    private readonly fileReadHandler: (file: File, content: string) => void
+    private readonly fileReadHandler: (file: File, content: string) => void,
+    private readonly zipInOut: ZipInOut,
   ) {
     document.body.ondragover = this.dragOverHandler.bind(this);
     document.body.ondragleave = this.dragOutHandler.bind(this);
@@ -29,25 +32,21 @@ export class FileDropper {
     }
   }
 
-  handleFile(file: File) {
+  async handleFile(file: File) {
     if (
       file.name.toLowerCase().endsWith("jpg") ||
       file.name.toLowerCase().endsWith("png") ||
-      file.name.toLowerCase().endsWith("webp")
-    )
-      console.log("File", file.name);
-
-    const reader = new FileReader();
-    reader.addEventListener(
-      "load",
-      () => {
-        this.fileReadHandler(file, reader.result as string);
-      },
-      false
-    );
-
-    if (file) {
+      file.name.toLowerCase().endsWith("webp") ||
+      file.name.toLowerCase().endsWith("svg")
+    ) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () =>
+          this.fileReadHandler(file, reader.result as string),
+          false);
       reader.readAsDataURL(file);
+    }
+    else if (file.name.toLowerCase().endsWith("pcz")) {
+      this.zipInOut.import(await file.arrayBuffer());
     }
   }
 }
