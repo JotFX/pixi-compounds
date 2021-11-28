@@ -9,6 +9,7 @@ import {PropertySheet} from "./view/PropertySheet";
 import {ElementOverview} from "./view/ElementOverview";
 import Typography from "@mui/material/Typography";
 import {ErrorToaster} from "./view/ErrorToaster";
+import {SortableOverview} from "./view/SortableOverview";
 
 export const App = observer(
   (props: { onExport: () => void; store: RootStore }) => {
@@ -36,7 +37,8 @@ export const App = observer(
               <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "left"  }}>
                 Element Overview
               </Typography>
-              <ElementOverview store={props.store} />
+              <SortableOverview store={props.store} />
+              {/*<ElementOverview store={props.store} />*/}
             </Paper>
           </div>
         </div>

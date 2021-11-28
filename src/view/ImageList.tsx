@@ -9,7 +9,7 @@ import {RootStore} from "../store/RootStore";
 
 export const ImageList = observer((props: { store: RootStore }) => {
   return (
-    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+    <List sx={{ width: "100%", bgcolor: "background.paper", border: props.store.draggedFiles.length ? "1px solid green" : "" }}>
       {props.store.imageStore.imageArray.map((f) => (
         <ListItem key={f.name}>
           <ListItemAvatar>

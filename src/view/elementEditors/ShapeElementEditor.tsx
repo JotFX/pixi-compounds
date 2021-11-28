@@ -13,6 +13,7 @@ import {ShapeElement, ShapeSurface, ShapeType} from "../../store/elements/ShapeE
 import {SimpleDropdown} from "../propertyEditors/SimpleDropdown";
 import {HexColorPicker} from "react-colorful";
 import {HEXToVBColor, VBColorToHEX} from "../../util/colorFunctions";
+import {ColorPicker} from "../propertyEditors/ColorPicker";
 
 export const ShapeElementEditor = observer((props: {model: ShapeElement, store: RootStore}) => {
 
@@ -41,7 +42,7 @@ export const ShapeElementEditor = observer((props: {model: ShapeElement, store: 
                 {text: "Color", value: ShapeSurface.color},
                 {text: "Texture", value: ShapeSurface.texture},
             ]} />
-        <HexColorPicker style={{height: 150}}  color={VBColorToHEX(props.model.color)} onChange={col => props.model.color = HEXToVBColor(col)} />
+        <ColorPicker title="Color" color={props.model.color} onChange={newColor => props.model.color = newColor} />
 
         <ImageSelector store={props.store} onChange={val => val && (props.model.textureId = val.name)} value={props.model.textureId} />
     </React.Fragment>

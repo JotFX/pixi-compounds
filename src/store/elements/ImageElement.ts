@@ -10,6 +10,7 @@ import {AlignHorizontal} from "../../manipulators/Resizer";
 export class ImageElement implements IElement {
   static imageNumber: number = 1;
   id = Math.random().toFixed(36).substr(2);
+  parent: IElement | null = null;
   bbox = createBBox();
   imageId = "";
   title = "Image " + ImageElement.imageNumber++;

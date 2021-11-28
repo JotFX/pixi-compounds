@@ -10,6 +10,7 @@ import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
 export class TextElement implements IElement {
   static imageNumber = 1;
   id = Math.random().toFixed(36).substr(2);
+  parent: IElement | null = null;
   bbox = createBBox();
   title = "Text " + TextElement.imageNumber++;
   type = ElementType.Text;

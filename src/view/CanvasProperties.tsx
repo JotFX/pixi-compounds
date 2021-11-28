@@ -12,6 +12,7 @@ import Select from '@mui/material/Select';
 import {HexColorPicker} from "react-colorful";
 import {HEXToVBColor, VBColorToHEX} from "../util/colorFunctions";
 import Typography from "@mui/material/Typography";
+import {ColorPicker} from "./propertyEditors/ColorPicker";
 
 export const CanvasProperties = observer((props: {store: RootStore}) => {
     return <FormGroup>
@@ -39,11 +40,6 @@ export const CanvasProperties = observer((props: {store: RootStore}) => {
                 </Select>
             </FormControl>
 
-            <FormControl>
-                <Typography  component="p" style={{textAlign: "left"}}>
-                    Background Color
-                </Typography>
-                <HexColorPicker title="Background Color" style={{height: 100}}  color={VBColorToHEX(props.store.backgroundColor)} onChange={col => props.store.backgroundColor = HEXToVBColor(col)} />
-            </FormControl>
+        <ColorPicker color={props.store.backgroundColor} onChange={newColor => props.store.backgroundColor = newColor} title="Background Color" />
         </FormGroup>
 });

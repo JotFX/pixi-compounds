@@ -39,4 +39,12 @@ export class TextElementRenderer extends PIXI.Text
     stopReactivity() {
         this.reactionDisposer && this.reactionDisposer();
     }
+
+    addChildRenderer(child: IElementRenderer): void {
+        this.addChild(child);
+    }
+
+    removeChildRenderers(): void {
+        this.removeChildren();
+    }
 }

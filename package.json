@@ -8,6 +8,7 @@
     "@emotion/styled": "11.6.0",
     "@mui/icons-material": "^5.2.0",
     "@mui/material": "5.2.0",
+    "@nosferatu500/react-sortable-tree": "^4.0.1",
     "file-saver": "2.0.5",
     "jszip": "3.7.1",
     "mobx": "6.3.7",

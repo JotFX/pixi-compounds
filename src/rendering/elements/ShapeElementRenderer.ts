@@ -13,10 +13,20 @@ import {BBox} from "../../store/elements/IElement";
 export class ShapeElementRenderer extends PIXI.Container
     implements IElementRenderer {
 
+    private readonly childContainer: PIXI.Container = new PIXI.Container();
+
     constructor(private readonly model: ShapeElement) {
         super();
         this.shape = new PIXI.Graphics();
         this.addChild(this.shape);
+        this.addChild(this.childContainer);
+    }
+
+    removeChildRenderers(): void {
+        this.childContainer.removeChildren();
+    }
+    addChildRenderer(child: IElementRenderer): void {
+        this.childContainer.addChild(child);
     }
 
     private shape: PIXI.Graphics;
@@ -39,9 +49,13 @@ export class ShapeElementRenderer extends PIXI.Container
                 this.sprite.x = -2500;
                 this.sprite.y = -2500;
                 this.sprite.mask = this.shape;
-                this.addChild(this.sprite);
+                this.addChildAt(this.sprite, 0);
             } else {
-                this.removeChild(this.sprite!);
+                if (this.sprite) {
+                    this.sprite!.mask = null;
+                    this.removeChild(this.sprite!);
+                    this.sprite = undefined;
+                }
             }
 
             this.drawGraphics(this.model.bbox);

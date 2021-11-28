@@ -41,6 +41,7 @@ export const createBBox = () => {
 
 export interface IElement {
     id: string;
+    parent: IElement | null;
     title: string;
     bbox: BBox;
     type: ElementType

@@ -25,6 +25,7 @@ export enum ShapeSurface {
 export class ShapeElement implements IElement {
   static shapeNumber = 1;
   id = Math.random().toFixed(36).substr(2);
+  parent: IElement | null = null;
   bbox = createBBox();
   title = "Shape " + ShapeElement.shapeNumber++;
   type = ElementType.Shape;

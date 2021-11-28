@@ -9,7 +9,7 @@ import { ZipInOut } from "./ZipInOut";
 const store = new RootStore();
 const inOut = new ZipInOut(store);
 
-const fileDropper = new FileDropper((file, content) => {
+const fileDropper = new FileDropper(store, (file, content) => {
   store.imageStore.addFile(file.name, content);
 }, inOut);
 

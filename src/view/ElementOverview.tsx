@@ -43,23 +43,23 @@ export const ElementOverview = observer((props: { store: RootStore }) => {
     let startElement: IElement;
 
     const onDragStart = (e: React.DragEvent<HTMLLIElement>, f: IElement) => {
-        startElement = f;
-        e.dataTransfer.setDragImage(e.currentTarget, 0, 0);
+        //startElement = f;
+        //e.dataTransfer.setDragImage(e.currentTarget, 0, 0);
     }
 
     const onDragOver = (e: React.DragEvent<HTMLLIElement>, f: IElement) => {
-        props.store.swapElements(startElement, f);
+        //props.store.swapElements(startElement, f);
     }
 
     const onDragEnter = (e: React.DragEvent<HTMLLIElement>) => {
-        e.dataTransfer.dropEffect = "copy";
+        //e.dataTransfer.dropEffect = "copy";
     }
     const onDelete = (f: IElement) => {
-        props.store.removeElement(f);
+        //props.store.removeElement(f);
     }
 
     return <List sx={{width: "100%", bgcolor: "background.paper"}}>
-        {props.store.templateElements.map((f) => (
+        {Array.from(props.store.templateElements.values()).map((f) => (
             <ListItem key={f.id} draggable={true}
                       style={{cursor: "grab"}}
                       onDragStart={e => onDragStart(e, f)}

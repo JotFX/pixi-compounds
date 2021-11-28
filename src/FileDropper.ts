@@ -1,7 +1,9 @@
 import {ZipInOut} from "./ZipInOut";
+import {RootStore} from "./store/RootStore";
 
 export class FileDropper {
   constructor(
+      private readonly store: RootStore,
     private readonly fileReadHandler: (file: File, content: string) => void,
     private readonly zipInOut: ZipInOut,
   ) {
@@ -11,13 +13,13 @@ export class FileDropper {
   }
 
   dragOutHandler(ev: any) {
-    document.body.style.border = "";
+    this.store.setDraggedFiles([]);
   }
 
   dragOverHandler(ev: any) {
     ev.preventDefault();
     if (ev.dataTransfer.items?.length || ev.dataTransfer.files?.length) {
-      document.body.style.border = "2px solid green";
+      this.store.setDraggedFiles(ev.dataTransfer.items || ev.dataTransfer.files);
     }
   }
 

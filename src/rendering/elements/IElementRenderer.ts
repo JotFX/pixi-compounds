@@ -4,4 +4,6 @@ import { RootStore } from "../../store/RootStore";
 export interface IElementRenderer extends PIXI.Container {
   startReactivity(store: RootStore): void;
   stopReactivity(): void;
+  removeChildRenderers(): void;
+  addChildRenderer(child: IElementRenderer): void;
 }

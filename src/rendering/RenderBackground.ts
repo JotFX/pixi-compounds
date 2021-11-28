@@ -8,7 +8,7 @@ export class RenderBackground extends PIXI.Graphics {
         this.interactive = true;
         this.on("click", (e) => {
             if (e.target === this) {
-                store.selectedElement = null;
+                store.setSelectedElement(null);
             }
         });
         autorun(() => {

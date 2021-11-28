@@ -31,4 +31,12 @@ export class ImageElementRenderer extends PIXI.Sprite
     stopReactivity() {
         this.reactionDisposer && this.reactionDisposer();
     }
+
+    addChildRenderer(child: IElementRenderer): void {
+        this.addChild(child);
+    }
+
+    removeChildRenderers(): void {
+        this.removeChildren();
+    }
 }

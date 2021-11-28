@@ -50,7 +50,7 @@ export class ZipInOut {
             const base64 = file.content.split("base64,")[1];
             zip.file(file.name, base64, {base64: true});
         });
-        const data = JSON.stringify(this.store.templateElements.map(el => el.writeItem()), null, " ");
+        const data = JSON.stringify(this.store.templateElementArray.map(el => el.writeItem()), null, " ");
         zip.file("data.json", data);
         zip.generateAsync({
             type: "blob", compressionOptions: {
