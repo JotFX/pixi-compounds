@@ -1,11 +1,11 @@
-import { makeAutoObservable, observable } from "mobx";
-import { ImageElementRenderer } from "../../rendering/elements/ImageElementRenderer";
-import {BBoxFit, createBBox, ElementType, IElement} from "./IElement";
-import { clone } from "../../util/clone";
+import {makeAutoObservable} from "mobx";
+import {ImageElementRenderer} from "../../rendering/elements/ImageElementRenderer";
+import {createBBox, ElementType, IElement} from "./IElement";
+import {clone} from "../../util/clone";
 import {ImageElementEditor} from "../../view/elementEditors/ImageElementEditor";
 import {RootStore} from "../RootStore";
 import * as React from "react";
-import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
+import {AlignHorizontal} from "../../manipulators/Resizer";
 
 export class ImageElement implements IElement {
   static imageNumber: number = 1;

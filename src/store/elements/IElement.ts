@@ -34,7 +34,7 @@ export const createBBox = () => {
         width: 100,
         height: 100,
         fit: BBoxFit.contain,
-        horizontalAlign: AlignHorizontal.left,
+        horizontalAlign: AlignHorizontal.center,
         verticalAlign: AlignVertical.center
     });
 }

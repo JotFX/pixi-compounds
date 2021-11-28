@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {HexColorPicker} from "react-colorful";
 import {HEXToVBColor, VBColorToHEX} from "../util/colorFunctions";
+import Typography from "@mui/material/Typography";
 
 export const CanvasProperties = observer((props: {store: RootStore}) => {
     return <FormGroup>
@@ -18,9 +19,10 @@ export const CanvasProperties = observer((props: {store: RootStore}) => {
                 <Checkbox checked={props.store.showCenter} onChange={e => props.store.showCenter = e.target.checked} />
             } label="Show Center" />
 
-            <FormControl>
+            <FormControl style={{textAlign: "left"}}>
                 <InputLabel id="labelGridSize">Snap to Grid Size</InputLabel>
                 <Select
+
                     labelId="labelGridSize"
                     id="gridSizeSelect"
                     variant="outlined"
@@ -36,9 +38,12 @@ export const CanvasProperties = observer((props: {store: RootStore}) => {
                     <MenuItem value={50}>50</MenuItem>
                 </Select>
             </FormControl>
-            <FormControl>
 
-                <HexColorPicker style={{height: 150}}  color={VBColorToHEX(props.store.backgroundColor)} onChange={col => props.store.backgroundColor = HEXToVBColor(col)} />
+            <FormControl>
+                <Typography  component="p" style={{textAlign: "left"}}>
+                    Background Color
+                </Typography>
+                <HexColorPicker title="Background Color" style={{height: 100}}  color={VBColorToHEX(props.store.backgroundColor)} onChange={col => props.store.backgroundColor = HEXToVBColor(col)} />
             </FormControl>
         </FormGroup>
 });

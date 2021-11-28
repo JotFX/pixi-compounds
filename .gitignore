@@ -7,7 +7,7 @@
 # IDEs and editors
 /.idea
 .project
-/.parcel-cache
+.parcel-cache
 .classpath
 .c9/
 dist/
