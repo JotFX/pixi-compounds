@@ -48,4 +48,15 @@ export class RootStore {
     parsedElement.readFromItem(el);
     this.addElement(parsedElement);
   }
+  swapElements(a: IElement, b: IElement) {
+    const ai = this.templateElements.indexOf(a);
+    const bi = this.templateElements.indexOf(b);
+    if (ai >= 0 && bi >= 0) {
+      this.templateElements[ai] = b;
+      this.templateElements[bi] = a;
+    }
+  }
+  removeElement(e: IElement) {
+    this.templateElements.remove(e);
+  }
 }

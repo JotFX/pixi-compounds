@@ -26,7 +26,7 @@ export class ShapeElement implements IElement {
   static shapeNumber = 1;
   id = Math.random().toFixed(36).substr(2);
   bbox = createBBox();
-  title = "Text " + ShapeElement.shapeNumber++;
+  title = "Shape " + ShapeElement.shapeNumber++;
   type = ElementType.Shape;
 
   shape: ShapeType = ShapeType.rect;

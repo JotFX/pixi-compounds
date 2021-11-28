@@ -6,6 +6,7 @@ import {ElementType, IElement} from "../store/elements/IElement";
 import {IElementRenderer} from "./elements/IElementRenderer";
 import {ImageElementRenderer} from "./elements/ImageElementRenderer";
 import {ImageElement} from "../store/elements/ImageElement";
+import {autorun} from "mobx";
 
 export class ElementRenderer extends PIXI.Container {
     constructor(private readonly store: RootStore) {
@@ -26,6 +27,13 @@ export class ElementRenderer extends PIXI.Container {
                 view!.off("pointerdown");
                 this.removeChild(view!);
                 view?.stopReactivity();
-            })
+            });
+        this.sortableChildren = true;
+        autorun(() => {
+            this.store.templateElements.forEach((value, index) => {
+               value.getRenderer().zIndex = index;
+            });
+            this.sortChildren();
+        });
     }
 }

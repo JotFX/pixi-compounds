@@ -16,7 +16,9 @@ export class FileDropper {
 
   dragOverHandler(ev: any) {
     ev.preventDefault();
-    document.body.style.border = "3px solid red";
+    if (ev.dataTransfer.items?.length || ev.dataTransfer.files?.length) {
+      document.body.style.border = "2px solid green";
+    }
   }
 
   dropHandler(ev: any) {
