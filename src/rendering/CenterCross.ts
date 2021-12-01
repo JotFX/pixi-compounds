@@ -15,6 +15,8 @@ export class CenterCross extends PIXI.Graphics {
         this.endFill();
         autorun(() => {
             this.visible = store.showCenter;
+            this.x = store.width / 2;
+            this.y = store.height / 2;
         })
     }
 }

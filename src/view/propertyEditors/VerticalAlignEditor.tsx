@@ -5,7 +5,7 @@ import * as React from "react";
 import {FormGroup} from "@mui/material";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
+import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer2";
 
 export const VerticalAlignEditor = observer((props: {model: IElement}) => {
     return <FormGroup>

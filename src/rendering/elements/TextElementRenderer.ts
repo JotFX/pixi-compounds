@@ -1,11 +1,9 @@
 import {IElementRenderer} from "./IElementRenderer";
 import * as PIXI from "pixi.js";
-import {ImageElement} from "../../store/elements/ImageElement";
 import {RootStore} from "../../store/RootStore";
 import {autorun, IReactionDisposer, reaction} from "mobx";
-import {Resizer} from "../../manipulators/Resizer";
-import {emptyImage} from "../../store/ImageStore";
 import {TextElement} from "../../store/elements/TextElement";
+import {fitIntoRect} from "../../util/fitIntoRect";
 
 
 export class TextElementRenderer extends PIXI.Text
@@ -24,7 +22,7 @@ export class TextElementRenderer extends PIXI.Text
             () => {
                 this.scale.set(1, 1);
                 this.text = this.model.text;
-                Resizer.fitIntoRect(this.model.bbox, this, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
+                fitIntoRect(this.model.bbox, this, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
             })
         autorun(() => {
             this.style = new PIXI.TextStyle({

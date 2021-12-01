@@ -1,7 +1,7 @@
 import {IElementRenderer} from "../../rendering/elements/IElementRenderer";
 import {ReactElement} from "react";
 import {RootStore} from "../RootStore";
-import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
+import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer2";
 import {observable} from "mobx";
 
 export enum BBoxFit {

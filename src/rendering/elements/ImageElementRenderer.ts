@@ -3,8 +3,9 @@ import * as PIXI from "pixi.js";
 import {ImageElement} from "../../store/elements/ImageElement";
 import {RootStore} from "../../store/RootStore";
 import {autorun, IReactionDisposer, reaction} from "mobx";
-import {Resizer} from "../../manipulators/Resizer";
+import {Resizer2} from "../../manipulators/Resizer2";
 import {emptyImage} from "../../store/ImageStore";
+import {fitIntoRect} from "../../util/fitIntoRect";
 
 
 export class ImageElementRenderer extends PIXI.Sprite
@@ -23,7 +24,7 @@ export class ImageElementRenderer extends PIXI.Sprite
             () => {
                 this.scale.set(1, 1);
                 this.texture = store.imageStore.getTexture(this.model.imageId);
-                Resizer.fitIntoRect(this.model.bbox, this, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
+                fitIntoRect(this.model.bbox, this, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
             }, {fireImmediately: true})
     }
 

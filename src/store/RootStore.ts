@@ -26,10 +26,15 @@ export class RootStore {
   draggedFiles: any[] = [];
   selectedElement: IElement | null = null;
 
-
   // templateElementArray: IObservableArray<IElement> = [] as unknown as IObservableArray;
 
   templateElements: ObservableMap<ElementID, IElement> = new ObservableMap();
+
+  constructor() {
+    makeAutoObservable(this);
+    const el = new ImageElement();
+    this.templateElements.set(el.id, el);
+  }
 
   get templateElementTree(): TemplateTreeNode[] {
     const treeNodes = new Map<ElementID | null, TemplateTreeNode>();
@@ -79,9 +84,6 @@ export class RootStore {
 
   clearTemplateElements() {
     this.templateElements.clear();
-  }
-  constructor() {
-    makeAutoObservable(this);
   }
   setDraggedFiles(files: any[]) {
     this.draggedFiles = files;

@@ -1,4 +1,5 @@
 import JSZip from "jszip";
+// @ts-ignore;
 import {saveAs} from "file-saver";
 import {RootStore} from "./store/RootStore";
 
