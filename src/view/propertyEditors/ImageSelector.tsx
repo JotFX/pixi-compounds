@@ -28,7 +28,7 @@ export const ImageSelector = observer((props: {
                 {props.store.imageStore.imageArray.map(f =>
                     <MenuItem key={f.name} value={f.name}>
                         <div style={{width: 50, height: 50,
-                            background: "url(" + f.content + ")",
+                            backgroundImage: "url(" + f.content + ")",
                             backgroundPosition: "center center",
                             backgroundSize: "contain",
                             backgroundRepeat: "no-repeat"}}> </div>

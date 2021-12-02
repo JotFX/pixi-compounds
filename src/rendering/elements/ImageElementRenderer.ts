@@ -22,9 +22,17 @@ export class ImageElementRenderer extends PIXI.Container
     private reactionDisposer: IReactionDisposer | undefined;
 
     startReactivity(store: RootStore) {
-        this.reactionDisposer = reaction(() => ({
+        this.reactionDisposer = autorun(() => {
+                this.sprite.scale.set(1, 1);
+                this.sprite.texture = store.imageStore.getTexture(this.model.imageId);
+                fitIntoRect(this.model.bbox, this.sprite, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
+                this.childRenderers.x = this.model.bbox.x;
+                this.childRenderers.y = this.model.bbox.y;
+            });
+        /*this.reactionDisposer = reaction(() => ({
                 imageId: this.model.imageId,
-                bboxValues: Object.values(this.model.bbox)
+                bboxValues: Object.values(this.model.bbox),
+                tree: store.treeStructure // es können neue kind eltern beziehungen auftreten
             }),
             () => {
                 this.sprite.scale.set(1, 1);
@@ -32,7 +40,7 @@ export class ImageElementRenderer extends PIXI.Container
                 fitIntoRect(this.model.bbox, this.sprite, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
                 this.childRenderers.x = this.model.bbox.x;
                 this.childRenderers.y = this.model.bbox.y;
-            }, {fireImmediately: true})
+            }, {fireImmediately: true})*/
     }
 
 

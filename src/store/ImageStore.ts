@@ -7,13 +7,14 @@ export const emptyImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAB
 export interface ImageFile {
   name: string;
   content: string;
-  texture: PIXI.Texture;
 }
 
 export class ImageStore {
 
   private images: ObservableMap<string, ImageFile> = new ObservableMap<string, ImageFile>();
-  private emptyTexture: PIXI.Texture;
+  private textures: ObservableMap<string, PIXI.Texture> = new ObservableMap<string, PIXI.Texture>();
+
+  private readonly emptyTexture: PIXI.Texture;
 
   constructor(private readonly store: RootStore) {
     makeAutoObservable(this);
@@ -23,9 +24,10 @@ export class ImageStore {
     if (!this.images.has(filename)) {
       this.images.set(filename, {
         name: filename,
-        content,
-        texture: PIXI.Texture.from(content)
+        content
       });
+      this.textures.set(filename,
+          PIXI.Texture.from(content));
     } else {
       console.error("Image already exists: " + filename);
       this.store.errors.push("Image already exists: " + filename);
@@ -40,9 +42,13 @@ export class ImageStore {
   getImage(imgId: string): ImageFile | undefined {
     return this.images.get(imgId);
   }
+  deleteImage(image: ImageFile) {
+    this.images.delete(image.name);
+    this.textures.delete(image.name);
+  }
 
   getTexture(imgId: string): PIXI.Texture {
-    const file = this.images.get(imgId);
-    return file?.texture || this.emptyTexture;
+    const texture = this.textures.get(imgId);
+    return texture || this.emptyTexture;
   }
 }

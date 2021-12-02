@@ -16,8 +16,9 @@ export class TextElementRenderer extends PIXI.Text
 
     startReactivity(store: RootStore) {
         this.reactionDisposer = reaction(() => ({
-                text: this.model.text,
-                bboxValues: Object.values(this.model.bbox)
+                modelValues: Object.values(this.model),
+                bboxValues: Object.values(this.model.bbox),
+                tree: store.treeStructure // es können neue kind eltern beziehungen auftreten
             }),
             () => {
                 this.scale.set(1, 1);

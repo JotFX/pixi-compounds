@@ -38,10 +38,13 @@ export class Renderer {
         this.app.ticker.add(() => this.onTicker());
         this.mover = new Mover(this.elementRenderer, store);
 
-        reaction(() => this.store.selectedElement, (selectedElement) => {
-            if (selectedElement) {
-                this.mover.setTarget(selectedElement.getRenderer());
-                this.resizer.setTarget(selectedElement.bbox, selectedElement.getRenderer());
+        reaction(() => ({
+            selectedElement: this.store.selectedElement,
+            treeStruct: store.treeStructure
+        }), (data) => {
+            if (data.selectedElement) {
+                this.mover.setTarget(data.selectedElement.getRenderer());
+                this.resizer.setTarget(data.selectedElement.bbox, data.selectedElement.getRenderer());
             } else {
                 this.resizer.visible = false;
             }

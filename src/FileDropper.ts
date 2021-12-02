@@ -1,4 +1,4 @@
-import {ZipInOut} from "./ZipInOut";
+import {ZipInOut} from "./store/ZipInOut";
 import {RootStore} from "./store/RootStore";
 
 export class FileDropper {

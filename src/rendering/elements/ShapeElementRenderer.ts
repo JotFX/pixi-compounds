@@ -1,11 +1,7 @@
 import {IElementRenderer} from "./IElementRenderer";
 import * as PIXI from "pixi.js";
-import {ImageElement} from "../../store/elements/ImageElement";
 import {RootStore} from "../../store/RootStore";
 import {autorun, IReactionDisposer, reaction} from "mobx";
-import {Resizer} from "../../manipulators/Resizer";
-import {emptyImage} from "../../store/ImageStore";
-import {TextElement} from "../../store/elements/TextElement";
 import {ShapeElement, ShapeSurface, ShapeType} from "../../store/elements/ShapeElement";
 import {BBox} from "../../store/elements/IElement";
 
@@ -46,8 +42,8 @@ export class ShapeElementRenderer extends PIXI.Container
                 }
                 const scale = Math.max(0, Math.min(100, this.model.textureScale));
                 this.sprite.tileScale.set(scale);
-                this.sprite.x = -2500;
-                this.sprite.y = -2500;
+                this.sprite.x = this.model.bbox.x;
+                this.sprite.y = this.model.bbox.y;
                 this.sprite.mask = this.shape;
                 this.addChildAt(this.sprite, 0);
             } else {
@@ -59,6 +55,8 @@ export class ShapeElementRenderer extends PIXI.Container
             }
 
             this.drawGraphics(this.model.bbox);
+            this.childContainer.x = this.model.bbox.x;
+            this.childContainer.y = this.model.bbox.y;
         });
 
     }

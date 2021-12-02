@@ -40,7 +40,6 @@ export class RootStore {
   }
 
   uplateTemplateTreeStructure(nodes: IListElement[]) {
-    console.log("nodes", nodes, this.templateElementList);
     this.templateElementList.replace(nodes.map(n => this.createListElement(n)));
   }
 
@@ -82,11 +81,13 @@ export class RootStore {
   setSelectedElement(el: IElement | null) {
     this.selectedElement = el;
   }
-  addElement(el: IElement) {
+  addElement(el: IElement, selectElement: boolean = true) {
     const listElement = new ListElement(el);
     this.elementById.set(el.id, el);
     this.templateElementList.push(listElement);
-    this.setSelectedElement(el);
+    if (selectElement) {
+      this.setSelectedElement(el);
+    }
   }
 
   parseElement(el: IElement) {
@@ -106,6 +107,7 @@ export class RootStore {
         throw new Error("unknown element type: " + el.type);
     }
     parsedElement.readFromItem(el);
-    this.addElement(parsedElement);
+    this.addElement(parsedElement, false);
   }
+
 }
