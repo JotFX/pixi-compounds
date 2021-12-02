@@ -5,7 +5,6 @@ import {RootStore} from "../RootStore";
 import * as React from "react";
 import {TextElementEditor} from "../../view/elementEditors/TextElementEditor";
 import {TextElementRenderer} from "../../rendering/elements/TextElementRenderer";
-import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
 
 export class TextElement implements IElement {
   static imageNumber = 1;

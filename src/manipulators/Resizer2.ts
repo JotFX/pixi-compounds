@@ -43,23 +43,10 @@ export class Resizer2 extends PIXI.Container {
     public setTarget(sourceBBox: IRectLike, sourceDisplayObject: PIXI.DisplayObject) {
         this.sourceDisplayObject = sourceDisplayObject;
         this.sourceBBox = sourceBBox;
-        console.log("setTarget");
-        this.calculateBBoxInResizerSpace();
         this.visible = true;
+        this.calculateBBoxInResizerSpace();
         this.redraw();
     }
-
-    /*private targetToResizerSpace(p: PIXI.Point): PIXI.Point {
-        const worldPoint = new PIXI.Point;
-        this.targetDisplayObject!.transform.worldTransform.applyInverse(p, worldPoint);
-        return this.transform.worldTransform.apply(worldPoint);
-    }
-
-    private resizerToTargetSpacce(p: PIXI.Point): PIXI.Point {
-        const worldPoint = new PIXI.Point;
-        this.transform.worldTransform.applyInverse(p, worldPoint);
-        return this.targetDisplayObject!.worldTransform.apply(worldPoint);
-    }*/
 
     private worldToResizerSpace(p: PIXI.Point): PIXI.Point {
         const localPoint = new PIXI.Point;
@@ -208,12 +195,14 @@ export class Resizer2 extends PIXI.Container {
 
     private calculateBBoxInResizerSpace() {
         this.sourceDisplayObject!.updateTransform();
-        this.updateTransform();
-        console.log("local", this.sourceBBox);
+        try {
+            this.updateTransform();
+        } catch (e) {
+            console.error("Cannot update transform", e);
+        }
+
         const worldRect = transformRectToWorld(this.sourceBBox!, this.sourceDisplayObject!.parent.transform);
-        console.log("world", worldRect, this.sourceDisplayObject!.toGlobal(this.sourceBBox!));
         this.targetBBox = transformRectToLocal(worldRect, this.transform);
-        console.log("resizerLocal", this.targetBBox);
     }
 
 

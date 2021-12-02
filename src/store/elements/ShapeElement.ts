@@ -3,9 +3,6 @@ import {BBoxFit, createBBox, ElementType, IElement} from "./IElement";
 import {clone} from "../../util/clone";
 import {RootStore} from "../RootStore";
 import * as React from "react";
-import {TextElementEditor} from "../../view/elementEditors/TextElementEditor";
-import {TextElementRenderer} from "../../rendering/elements/TextElementRenderer";
-import {AlignHorizontal, AlignVertical} from "../../manipulators/Resizer";
 import {ShapeElementRenderer} from "../../rendering/elements/ShapeElementRenderer";
 import {ShapeElementEditor} from "../../view/elementEditors/ShapeElementEditor";
 

@@ -5,7 +5,7 @@ import {clone} from "../../util/clone";
 import {ImageElementEditor} from "../../view/elementEditors/ImageElementEditor";
 import {RootStore} from "../RootStore";
 import * as React from "react";
-import {AlignHorizontal} from "../../manipulators/Resizer";
+import {ListElement} from "./ListElement";
 
 export class ImageElement implements IElement {
   static imageNumber: number = 1;
