@@ -1,10 +1,18 @@
 import {IElement} from "./IElement";
 
+export interface IListElement {
+    id: string;
+    title: string;
+    subtitle: string;
+    expanded: boolean;
+    children: IListElement[];
+}
+
 export class ListElement {
     get id() {
         return this.element.id;
     }
-    children: IElement[] = [];
+    children: ListElement[] = [];
     expanded: boolean = true;
     constructor(
         public readonly element: IElement) {
@@ -14,5 +22,14 @@ export class ListElement {
     }
     get subtitle() {
         return this.element.type;
+    }
+    getJSON(): IListElement {
+        return {
+            id: this.id,
+            expanded: this.expanded,
+            title: this.title,
+            subtitle: this.subtitle,
+            children: this.children.map(c => c.getJSON())
+        }
     }
 }

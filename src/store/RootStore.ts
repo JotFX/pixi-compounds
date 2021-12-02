@@ -4,6 +4,7 @@ import {ElementType, IElement} from "./elements/IElement";
 import {ShapeElement} from "./elements/ShapeElement";
 import {ImageElement} from "./elements/ImageElement";
 import {TextElement} from "./elements/TextElement";
+import {IListElement, ListElement} from "./elements/ListElement";
 
 export interface TemplateTreeNode {
   id: string | null;
@@ -26,64 +27,54 @@ export class RootStore {
   draggedFiles: any[] = [];
   selectedElement: IElement | null = null;
 
-  // templateElementArray: IObservableArray<IElement> = [] as unknown as IObservableArray;
+  templateElementList: IObservableArray<ListElement> = [] as unknown as IObservableArray;
+  elementById: ObservableMap<string, IElement> = new ObservableMap<string, IElement>();
 
-  templateElements: ObservableMap<ElementID, IElement> = new ObservableMap();
 
   constructor() {
     makeAutoObservable(this);
-    const el = new ImageElement();
-    this.templateElements.set(el.id, el);
   }
 
-  get templateElementTree(): TemplateTreeNode[] {
-    const treeNodes = new Map<ElementID | null, TemplateTreeNode>();
-    const getNode = (el: IElement | null) => {
-      const id = el?.id || null;
-      if (!treeNodes.has(id)) {
-        treeNodes.set(id, {id, title: el?.title || "Root", children: [], expanded: true, subtitle: el?.type });
+  setSelectedNode(node: IListElement) {
+    this.setSelectedElement(this.elementById.get(node.id)!);
+  }
+
+  uplateTemplateTreeStructure(nodes: IListElement[]) {
+    console.log("nodes", nodes, this.templateElementList);
+    this.templateElementList.replace(nodes.map(n => this.createListElement(n)));
+  }
+
+  private createListElement(node: IListElement): ListElement {
+    const iElement = this.elementById.get(node.id)!;
+    const listElement = new ListElement(iElement);
+    listElement.children = node.children.map(c => this.createListElement(c));
+    return listElement;
+  }
+
+  get treeStructure() {
+    return this.templateElementList.map(el => el.getJSON());
+  }
+
+  get flatTemplateElementArray(): IElement[] {
+    const list: IElement[] = [];
+    // seiteneffekte!!
+    this.flatElements(list, this.templateElementList);
+    return list;
+  }
+
+  private flatElements(listToAppend: IElement[], currentElements: ListElement[]): IElement[] {
+    listToAppend.concat(currentElements.map(e => e.element));
+    currentElements.forEach(e => {
+      listToAppend.push(e.element);
+      if (e.children && e.children.length) {
+        this.flatElements(listToAppend, e.children);
       }
-      return treeNodes.get(id)!;
-    };
-    this.templateElements.forEach((el, key) => {
-      const parent = getNode(el.parent || null);
-      const self = getNode(el);
-      parent.children?.push(self);
-    });
-    // root node zurück geben
-    return getNode(null).children!;
+    })
+    return listToAppend;
   }
-
-  setSelectedNode(id: string | null) {
-    const templateElement = this.templateElements.get(id as string)!;
-    this.setSelectedElement(templateElement);
-  }
-
-  uplateTemplateTreeStructure(nodes: TemplateTreeNode[], parent: TemplateTreeNode | null = null) {
-    nodes.forEach(node => {
-      const templateElement = this.templateElements.get(node.id as string)!;
-      if (parent === null) {
-        templateElement.parent = null;
-      } else {
-        templateElement.parent = this.templateElements.get(parent.id as string)!
-      }
-      if (node.children) {
-        this.uplateTemplateTreeStructure(node.children, node);
-      }
-    });
-    if (parent === null) {
-      console.log("templateElementArray", this.templateElementArray.map(e => e.parent?.id).join(", "));
-    }
-  }
-  get templateElementArray() {
-    return Array.from(this.templateElements.values());
-  }
-
-
-
 
   clearTemplateElements() {
-    this.templateElements.clear();
+    this.templateElementList.clear();
   }
   setDraggedFiles(files: any[]) {
     this.draggedFiles = files;
@@ -92,7 +83,9 @@ export class RootStore {
     this.selectedElement = el;
   }
   addElement(el: IElement) {
-    this.templateElements.set(el.id, el);
+    const listElement = new ListElement(el);
+    this.elementById.set(el.id, el);
+    this.templateElementList.push(listElement);
     this.setSelectedElement(el);
   }
 
@@ -114,8 +107,5 @@ export class RootStore {
     }
     parsedElement.readFromItem(el);
     this.addElement(parsedElement);
-  }
-  removeElement(e: IElement) {
-    this.templateElements.delete(e.id);
   }
 }

@@ -8,10 +8,15 @@ import {emptyImage} from "../../store/ImageStore";
 import {fitIntoRect} from "../../util/fitIntoRect";
 
 
-export class ImageElementRenderer extends PIXI.Sprite
+export class ImageElementRenderer extends PIXI.Container
     implements IElementRenderer {
+    private readonly sprite: PIXI.Sprite;
+    private readonly childRenderers: PIXI.Container = new PIXI.Container;
     constructor(private readonly model: ImageElement) {
-        super(PIXI.Texture.from(emptyImage));
+        super();
+        this.sprite = new PIXI.Sprite(PIXI.Texture.from(emptyImage));
+        this.addChild(this.sprite);
+        this.addChild(this.childRenderers);
     }
 
     private reactionDisposer: IReactionDisposer | undefined;
@@ -22,9 +27,11 @@ export class ImageElementRenderer extends PIXI.Sprite
                 bboxValues: Object.values(this.model.bbox)
             }),
             () => {
-                this.scale.set(1, 1);
-                this.texture = store.imageStore.getTexture(this.model.imageId);
-                fitIntoRect(this.model.bbox, this, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
+                this.sprite.scale.set(1, 1);
+                this.sprite.texture = store.imageStore.getTexture(this.model.imageId);
+                fitIntoRect(this.model.bbox, this.sprite, this.model.bbox.fit, this.model.bbox.horizontalAlign, this.model.bbox.verticalAlign);
+                this.childRenderers.x = this.model.bbox.x;
+                this.childRenderers.y = this.model.bbox.y;
             }, {fireImmediately: true})
     }
 
@@ -34,10 +41,10 @@ export class ImageElementRenderer extends PIXI.Sprite
     }
 
     addChildRenderer(child: IElementRenderer): void {
-        this.addChild(child);
+        this.childRenderers.addChild(child);
     }
 
     removeChildRenderers(): void {
-        this.removeChildren();
+        this.childRenderers.removeChildren();
     }
 }

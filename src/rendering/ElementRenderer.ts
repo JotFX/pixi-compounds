@@ -3,19 +3,21 @@ import {CenterCross} from "./CenterCross";
 import {RootStore} from "../store/RootStore";
 import {watchArray} from "../util/watchArray";
 import {ElementType, IElement} from "../store/elements/IElement";
-import {IElementRenderer} from "./elements/IElementRenderer";
+import {IElementRenderer, IRendererContainer} from "./elements/IElementRenderer";
 import {ImageElementRenderer} from "./elements/ImageElementRenderer";
 import {ImageElement} from "../store/elements/ImageElement";
 import {autorun, reaction} from "mobx";
+import {ListElement} from "../store/elements/ListElement";
 
-export class ElementRenderer extends PIXI.Container {
+export class ElementRenderer extends PIXI.Container implements IRendererContainer{
     constructor(private readonly store: RootStore) {
         super();
         this.interactive = true;
-        watchArray<IElement, IElementRenderer>(() => this.store.templateElementArray,
-            (item, index) => {
+        this.store.elementById.observe_(changes => {
+            if (changes.type === "add") {
+                const item = changes.newValue;
+
                 let newRenderer = item.getRenderer();
-                this.addChild(newRenderer);
                 newRenderer.interactive = true;
                 newRenderer.on("pointerdown", (e) => {
                     if (e.target === newRenderer) {
@@ -23,33 +25,41 @@ export class ElementRenderer extends PIXI.Container {
                     }
                 });
                 newRenderer.startReactivity(this.store);
-                return newRenderer;
-            },
-            (item, view, index) => {
-                view!.off("pointerdown");
-                this.removeChild(view!);
-                view?.stopReactivity();
-            });
 
+            } else if (changes.type === "delete") {
+                const item = changes.oldValue;
+                const renderer = item.getRenderer();
+                renderer!.off("pointerdown");
+                renderer?.stopReactivity();
+            }
+        });
 
-        reaction(() => this.store.templateElementTree, () => {
-            this.removeChildren();
-            this.store.templateElementArray.forEach(e => {
-                e.getRenderer().removeChildRenderers();
-               if (e.parent === null) {
-                    this.addChild(e.getRenderer());
-               } else {
-                   e.parent.getRenderer().addChildRenderer(e.getRenderer());
-               }
-            });
+        reaction(() => this.store.templateElementList.slice(0), (list) => {
+            console.log("list", list);
+            this.addChildrenTo(list, this);
         });
 
         this.sortableChildren = true;
-        autorun(() => {
-            this.store.templateElementArray.forEach((value, index) => {
-               value.getRenderer().zIndex = index;
-            });
-            this.sortChildren();
+    }
+
+    removeChildRenderers(): void {
+        this.removeChildren();
+    }
+    addChildRenderer(child: IElementRenderer): void {
+        this.addChild(child);
+    }
+
+    private addChildrenTo(elements: ListElement[], targetContainer: IRendererContainer) {
+        if (!elements) {
+            return;
+        }
+        targetContainer.removeChildRenderers();
+        elements.forEach((e, i) => {
+            const renderer = e.element.getRenderer();
+            renderer.zIndex = i;
+            targetContainer.addChildRenderer(renderer);
+            renderer.sortChildren();
+            this.addChildrenTo(e.children, renderer);
         });
     }
 }

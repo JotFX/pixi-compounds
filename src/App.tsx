@@ -6,7 +6,6 @@ import { RenderContainer } from "./view/RenderContainer";
 import React from "react";
 import { ImageList } from "./view/ImageList";
 import {PropertySheet} from "./view/PropertySheet";
-import {ElementOverview} from "./view/ElementOverview";
 import Typography from "@mui/material/Typography";
 import {ErrorToaster} from "./view/ErrorToaster";
 import {SortableOverview} from "./view/SortableOverview";
