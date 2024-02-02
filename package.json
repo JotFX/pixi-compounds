@@ -4,27 +4,28 @@
   "description": "",
   "keywords": [],
   "dependencies": {
-    "@emotion/react": "11.6.0",
-    "@emotion/styled": "11.6.0",
-    "@mui/icons-material": "^5.2.0",
-    "@mui/material": "5.2.0",
-    "@nosferatu500/react-sortable-tree": "^4.0.1",
+    "@emotion/react": "11.8.2",
+    "@emotion/styled": "11.8.1",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "5.5.2",
+    "@nosferatu500/react-sortable-tree": "^4.0.6",
     "file-saver": "2.0.5",
     "jszip": "3.7.1",
-    "mobx": "6.3.7",
-    "mobx-react": "7.2.1",
-    "parcel": "^2.0.1",
-    "pixi.js": "6.2.0",
+    "mobx": "6.5.0",
+    "mobx-react": "7.3.0",
+    "parcel": "^2.4.0",
+    "pixi.js": "6.2.2",
     "react": "17.0.2",
     "react-colorful": "^5.5.1",
     "react-dom": "17.0.2",
-    "react-scripts": "4.0.3",
-    "typed-signals": "^2.3.0"
+    "typed-signals": "^2.4.0"
   },
   "devDependencies": {
-    "@types/react": "17.0.20",
-    "@types/react-dom": "17.0.9",
-    "typescript": "4.4.2"
+    "@types/react": "17.0.41",
+    "@types/react-dom": "17.0.14",
+    "buffer": "^6.0.3",
+    "querystring-es3": "^0.2.1",
+    "typescript": "4.6.2"
   },
   "scripts": {
     "start": "parcel src/index.html"
