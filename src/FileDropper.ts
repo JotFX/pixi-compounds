@@ -1,6 +1,7 @@
 import {ZipInOut} from "./store/ZipInOut";
 import {RootStore} from "./store/RootStore";
 
+// Listens for files being dragged into the browser window and handles them, by calling the fileReaderHandler with the file content
 export class FileDropper {
   constructor(
       private readonly store: RootStore,
